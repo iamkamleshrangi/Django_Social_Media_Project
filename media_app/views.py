@@ -6,6 +6,11 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+def index(request):
+    page_name="index.html"
+    return render(request, page_name)
+
 def sign_up(request):
     page_name = "sign_up.html"
     if request.method == "POST":
@@ -23,7 +28,7 @@ def sign_up(request):
             return redirect('profile_settings')
         else:
             return render(request, page_name, {"error": True, "error_msg": "Some error occurred"})
-    else:
+    else: # GET METHOD
         return render(request, page_name)
         
 def sign_in(request):
@@ -40,11 +45,6 @@ def sign_in(request):
     else:
         return render(request, page_name)
     
-# @login_required(login_url='sign_in')
-def index(request):
-    page_name="index.html"
-    return render(request, page_name)
-
 @login_required(login_url='sign_in')
 def sign_out(request):
     auth.logout(request)
