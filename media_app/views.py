@@ -39,6 +39,11 @@ def sign_in(request):
             return render(request, page_name, {"error": True, "error_msg": "Some error occurred"})
     else:
         return render(request, page_name)
+    
+# @login_required(login_url='sign_in')
+def index(request):
+    page_name="index.html"
+    return render(request, page_name)
 
 @login_required(login_url='sign_in')
 def sign_out(request):
