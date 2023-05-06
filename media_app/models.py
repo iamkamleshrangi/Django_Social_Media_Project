@@ -4,21 +4,6 @@ from django.contrib.auth import get_user_model
 # User
 User = get_user_model()
 
-# related name / reverse relationship
-# user = User.objects.get()
-# user.profile => Profile
-# OR 
-# profile = Profile.objects.filter(user_id=user.id).last()
-
-# foreign key
-# profile = Profile.oobjects.get()
-# profile.user => User
-
-# on_delete with cascade
-# user u1 => profile p1 
-# if u1 is deleted => profile p1 ?
-# u1 is deleted p1 will be automatically deleted
-
 # Profile
 class Profile(models.Model):
     user = models.ForeignKey(User, related_name='profile', on_delete=models.CASCADE)
