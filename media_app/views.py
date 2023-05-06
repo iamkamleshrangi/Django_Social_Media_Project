@@ -6,65 +6,53 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-@csrf_exempt
 def sign_up(request):
+    page_name = "sign_up.html"
     if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-
         if User.objects.filter(username=username).exists():
-            print("username already taken")
-            return redirect('signup')
-        
+            return render(request, page_name, {"error": True, "error_msg": "Username already taken"})
         if User.objects.filter(email=email).exists():
-            print("email already taken")
-            return redirect('signup')
-        
+            return render(request, page_name, {"error": True, "error_msg": "Email already taken"})
         user = User.objects.create_user(username=username, email=email, password=password)
         user = auth.authenticate(username=username, password=password)
         if user:
-            # User is authenticated
             auth.login(request, user)
-            return JsonResponse({"message" : "sign up"})
+            return redirect('profile_settings')
         else:
-            print("some error is there")
+            return render(request, page_name, {"error": True, "error_msg": "Some error occurred"})
     else:
-        print("return sign up html page")
+        return render(request, page_name)
         
-@csrf_exempt
 def sign_in(request):
+    page_name = "sign_in.html"
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
         user = auth.authenticate(username=username, password=password)
         if user:
-            # binding
             auth.login(request, user)
-            return JsonResponse({"message" : "sign in"})
-            
+            return redirect('profile_settings')            
         else:
-            print("Some error is there")
+            return render(request, page_name, {"error": True, "error_msg": "Some error occurred"})
     else:
-        print("get method for sign in")
-        print("render sign in  html page")
+        return render(request, page_name)
 
-@csrf_exempt
+@login_required(login_url='sign_in')
 def sign_out(request):
-     # opposite of binding
     auth.logout(request)
-    return JsonResponse({"message" : "sign out"})
+    return redirect('sign_up')            
     
 @login_required(login_url='sign_in')
 def profile_settings(request):
-    try:
-        response_data = {
-            "message" : "Hello, you are at profile settings page with current details",
-            "id": request.user.id,
-            "email": request.user.email,
-            "username": request.user.username
-        }
-        return JsonResponse(response_data)
-    except:
-        return JsonResponse({"message" : "you are already signed out"})
+    page_name = "profile_settings.html"
+    data = {
+        "id": request.user.id,
+        "email": request.user.email,
+        "username": request.user.username
+    }
+    return render(request, page_name, data)
+    
         
