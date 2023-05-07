@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Welcome {{username }}</h1>
-  <h2>Email {{email}}
+  <h1>Welcome {{request.user.username }}</h1>
+  <h2>Email {{request.user.email}}
+  <h3>congratulations you have {{request.user.post.count}} posts</h3>
 {% endblock %}

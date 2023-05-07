@@ -28,7 +28,7 @@ def sign_up(request):
         user = auth.authenticate(username=username, password=password)
         if user:
             auth.login(request, user)
-            return redirect('profile_settings')
+            return redirect('index')
         else:
             return render(request, page_name, {"error": True, "error_msg": "Some error occurred"})
     else: # GET METHOD
@@ -42,7 +42,7 @@ def sign_in(request):
         user = auth.authenticate(username=username, password=password)
         if user:
             auth.login(request, user)
-            return redirect('profile_settings')            
+            return redirect('index')            
         else:
             return render(request, page_name, {"error": True, "error_msg": "Some error occurred"})
     else:
@@ -51,17 +51,12 @@ def sign_in(request):
 @login_required(login_url='sign_in')
 def sign_out(request):
     auth.logout(request)
-    return redirect('sign_up')            
+    return redirect('sign_up')   
     
 @login_required(login_url='sign_in')
 def profile_settings(request):
     page_name = "profile_settings.html"
-    data = {
-        "id": request.user.id,
-        "email": request.user.email,
-        "username": request.user.username
-    }
-    return render(request, page_name, data)
+    return render(request, page_name)
 
 @login_required(login_url='sign_in')
 def add_post(request):
