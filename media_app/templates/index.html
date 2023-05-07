@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Welcome to the social media app</h1>
-  <h2>Sign up and enjoy the content</h2>
+  <form method="POST" action="">
+  <div class="form-floating">
+    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+    <label for="floatingTextarea2">Add your post</label>
+    <button type="button" class="btn btn-primary">Primary</button>
+  </div>
+  </form>
 {% endblock %}
