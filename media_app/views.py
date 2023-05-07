@@ -9,7 +9,10 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     page_name="index.html"
-    return render(request, page_name)
+    data = {
+        "post_list" : Post.objects.all().order_by('-created_at')
+    }
+    return render(request, page_name, data)
 
 def sign_up(request):
     page_name = "sign_up.html"

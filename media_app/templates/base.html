@@ -16,6 +16,8 @@
       {% if request.user.is_authenticated %}
         <a class="p-1 rounded" href="/signout">Sign Out</a>  
         <a class="p-1 rounded" href="/profile-settings">View my profile settings</a>  
+        <span class="badge bg-secondary">Currently logged in as {{request.user.username}}</span>
+
       {% else %}
         <a class="p-1 rounded" href="/signup">Sign Up</a>
         <a class="p-1 rounded" href="/signin">Sign In</a>

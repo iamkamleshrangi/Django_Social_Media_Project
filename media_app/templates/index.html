@@ -9,4 +9,20 @@
     <button type="submit" class="btn btn-primary">Post</button>
   </div>
   </form>
+  <h1>Posts</h1>
+  {% for post in post_list %}
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <p class="card-text">{{post.caption}}</p>
+      <br>
+      <blockquote class="blockquote mb-0">
+        <footer class="blockquote-footer">{{post.user.username}}</footer>
+      </blockquote>
+      <br>
+      {% if request.user.id != post.user.id %}
+       <a href="#" class="btn btn-primary">Like</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
 {% endblock %}
