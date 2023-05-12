@@ -23,6 +23,7 @@
       </blockquote>
       <br>
       {% if request.user.id != post.user.id %}
+      {% comment %} <form action= method="GET"> {% endcomment %}
        <a href="#" class="btn btn-primary">Like</a>
       {% endif %}
       Nof of Likes : {{post.like_post.count}}
