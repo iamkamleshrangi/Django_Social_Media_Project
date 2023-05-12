@@ -4,13 +4,16 @@ from media_app.models import User, Post, LikePost
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from media_app.utils import find_no_of_likes_received_by_user
 
 # Create your views here.
 
 def index(request):
+    user = request.user
     page_name="index.html"
     data = {
-        "post_list" : Post.objects.all().order_by('-created_at')
+        "post_list" : Post.objects.all().order_by('-created_at'),
+        "already_liked_post_ids_of_current_user": user.like_post.values_list('post_id', flat=True) 
     }
     return render(request, page_name, data)
 
@@ -55,8 +58,14 @@ def sign_out(request):
     
 @login_required(login_url='sign_in')
 def profile_settings(request):
+    user = request.user
     page_name = "profile_settings.html"
-    return render(request, page_name)
+    data = {
+        "no_of_posts_created" : user.post.count(),
+        "no_of_likes_done": user.like_post.count(),
+        "no_of_likes_received": find_no_of_likes_received_by_user(user),
+    }
+    return render(request, page_name, data)
 
 @login_required(login_url='sign_in')
 def add_post(request):

@@ -30,6 +30,7 @@ class Post(models.Model):
 # LikePost
 class LikePost(models.Model):
     post = models.ForeignKey(Post, related_name='like_post', on_delete=models.CASCADE)
+    # here we are storing the user who made the like
     user = models.ForeignKey(User, related_name='like_post', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
