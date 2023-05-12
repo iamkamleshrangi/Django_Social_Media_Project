@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
-from media_app.models import User, Post
+from media_app.models import User, Post, LikePost
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -63,6 +63,23 @@ def add_post(request):
     user = request.user
     caption = request.POST['caption']
     Post.objects.create(user=user, caption=caption)
+    return redirect('index')
+
+@login_required(login_url='sign_in')
+def like_post(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    # LikePost.objects.create(
+    #     post=post,
+    #     user=user
+    # )
+    # or 
+    # LikePost.objects.create(
+    #     post_id=post_id,
+    #     user_id=user.id
+    # )
+    print("post id", post_id)
+    # Post.objects.create(user=user, caption=caption)
     return redirect('index')
 
 
