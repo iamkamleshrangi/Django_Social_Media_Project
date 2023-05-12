@@ -74,12 +74,10 @@ def like_post(request, post_id):
     #     user=user
     # )
     # or 
-    # LikePost.objects.create(
-    #     post_id=post_id,
-    #     user_id=user.id
-    # )
-    print("post id", post_id)
-    # Post.objects.create(user=user, caption=caption)
+    LikePost.objects.create(
+        post_id=post_id,
+        user_id=user.id
+    )
     return redirect('index')
 
 
