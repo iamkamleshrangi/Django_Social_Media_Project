@@ -15,5 +15,5 @@ git clone https://github.com/isadev97/Django_Social_Media_Project.git
 git pull (need to do this step repeatedly)
 source project_env/bin/activate
 pip install -r requirements.txt
-python manage.pt runserver
+python manage.py runserver
 ```
