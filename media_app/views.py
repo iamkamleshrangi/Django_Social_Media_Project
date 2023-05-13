@@ -12,8 +12,8 @@ def index(request):
     user = request.user
     page_name="index.html"
     data = {
-        "post_list" : Post.objects.all().order_by('-created_at'),
-        "already_liked_post_ids_of_current_user": user.like_post.values_list('post_id', flat=True) 
+        "post_list" : Post.objects.all().order_by('-created_at') if user.is_authenticated else [],
+        "already_liked_post_ids_of_current_user": user.like_post.values_list('post_id', flat=True) if user.is_authenticated else []
     }
     return render(request, page_name, data)
 
