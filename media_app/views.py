@@ -71,7 +71,8 @@ def profile_settings(request):
 def add_post(request):
     user = request.user
     caption = request.POST['caption']
-    Post.objects.create(user=user, caption=caption)
+    image = request.FILES['image_upload']
+    Post.objects.create(user=user, caption=caption, image=image)
     return redirect('index')
 
 @login_required(login_url='sign_in')
